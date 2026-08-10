@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Facades\Storage;
+
+class Page extends Model
+{
+    protected $fillable = [
+        'slug', 'title', 'subtitle', 'hero_image', 'content', 'meta_description', 'is_published',
+    ];
+
+    protected $casts = [
+        'is_published' => 'boolean',
+    ];
+
+    protected $appends = ['hero_image_url'];
+
+    protected function heroImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->hero_image ? Storage::disk('public')->url($this->hero_image) : null,
+        );
+    }
+}
