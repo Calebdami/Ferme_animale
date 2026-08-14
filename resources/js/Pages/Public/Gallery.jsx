@@ -11,7 +11,7 @@ export default function Gallery({ items }) {
                 <SectionTitle eyebrow="En images" title="Galerie photos & vidéos" subtitle="La ferme, les volailles, les installations." />
                 <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                     {items.map((m) => (
-                        <div key={m.id} className="aspect-square overflow-hidden rounded-xl border border-soil-700 bg-soil-900/60">
+                        <div key={m.id} className="aspect-square overflow-hidden rounded-xl border border-gray-200 dark:border-soil-700 bg-gray-100 dark:bg-soil-900/60">
                             {m.type === 'video' ? (
                                 <video src={m.url} controls className="h-full w-full object-cover" />
                             ) : (
@@ -19,7 +19,7 @@ export default function Gallery({ items }) {
                             )}
                         </div>
                     ))}
-                    {items.length === 0 && <p className="col-span-full py-10 text-center text-sand-500">La galerie sera bientôt garnie.</p>}
+                    {items.length === 0 && <p className="col-span-full py-10 text-center text-gray-400 dark:text-sand-500">La galerie sera bientôt garnie.</p>}
                 </div>
             </Container>
         </PublicLayout>

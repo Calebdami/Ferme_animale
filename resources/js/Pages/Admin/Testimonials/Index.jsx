@@ -2,11 +2,13 @@ import { Head, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Button, Label, Select, TextInput, Textarea, Toggle } from '@/Components/Form/Field';
+import ConfirmModal from '@/Components/ConfirmModal';
 
 const emptyForm = { author_name: '', author_role: '', content: '', rating: 5, is_published: true };
 
 export default function Index({ testimonials }) {
     const [editingId, setEditingId] = useState(null);
+    const [deletingItem, setDeletingItem] = useState(null);
     const { data, setData, post, put, processing, reset } = useForm(emptyForm);
 
     const edit = (t) => {
@@ -25,15 +27,17 @@ export default function Index({ testimonials }) {
         }
     };
 
-    const destroy = (t) => {
-        if (confirm(`Supprimer le témoignage de « ${t.author_name} » ?`)) router.delete(route('admin.testimonials.destroy', t.id));
+    const handleConfirmDelete = () => {
+        if (deletingItem) {
+            router.delete(route('admin.testimonials.destroy', deletingItem.id));
+        }
     };
 
     return (
         <AdminLayout title="Témoignages clients">
             <Head title="Témoignages" />
 
-            <form onSubmit={submit} className="mb-8 grid gap-4 rounded-xl border border-soil-700 bg-soil-900/60 p-5 sm:grid-cols-2">
+            <form onSubmit={submit} className="mb-8 grid gap-4 rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 p-5 sm:grid-cols-2 shadow-sm dark:shadow-none">
                 <div>
                     <Label htmlFor="author_name">Nom</Label>
                     <TextInput id="author_name" value={data.author_name} onChange={(e) => setData('author_name', e.target.value)} />
@@ -59,20 +63,29 @@ export default function Index({ testimonials }) {
                 </div>
             </form>
 
-            <div className="overflow-hidden rounded-xl border border-soil-700">
+            <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 shadow-sm dark:shadow-none">
                 {testimonials.map((t) => (
-                    <div key={t.id} className="flex items-center justify-between border-b border-soil-800 p-4 last:border-0">
+                    <div key={t.id} className="flex items-center justify-between border-b border-gray-100 dark:border-soil-800 p-4 last:border-0">
                         <div>
-                            <p className="text-sm font-medium text-sand-100">{t.author_name}</p>
-                            <p className="line-clamp-1 text-xs text-sand-500">{t.content}</p>
+                            <p className="text-sm font-medium text-gray-900 dark:text-sand-100">{t.author_name}</p>
+                            <p className="line-clamp-1 text-xs text-gray-400 dark:text-sand-500">{t.content}</p>
                         </div>
                         <div className="flex gap-3">
-                            <button onClick={() => edit(t)} className="text-sm text-yolk-400 hover:underline">Modifier</button>
-                            <button onClick={() => destroy(t)} className="text-sm text-clay-500 hover:underline">Supprimer</button>
+                            <button onClick={() => edit(t)} className="text-sm text-yolk-500 hover:underline">Modifier</button>
+                            <button onClick={() => setDeletingItem(t)} className="text-sm text-clay-500 hover:underline">Supprimer</button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            <ConfirmModal
+                isOpen={!!deletingItem}
+                onClose={() => setDeletingItem(null)}
+                onConfirm={handleConfirmDelete}
+                title="Supprimer ce témoignage"
+                message={`Êtes-vous sûr de vouloir supprimer le témoignage de « ${deletingItem?.author_name} » ?`}
+                confirmText="Supprimer"
+            />
         </AdminLayout>
     );
 }

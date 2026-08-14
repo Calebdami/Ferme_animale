@@ -29,7 +29,7 @@ function MediaPreview({ localUrl, savedPath, type }) {
     if (!src) return null;
 
     return (
-        <div className="relative mb-2 overflow-hidden rounded-lg border border-soil-700 bg-soil-800">
+        <div className="relative mb-2 overflow-hidden rounded-lg border border-gray-200 dark:border-soil-700 bg-gray-100 dark:bg-soil-800">
             {type === 'image' ? (
                 <img
                     src={src}
@@ -60,7 +60,6 @@ export default function Edit({ settings }) {
         return acc;
     }, {});
 
-    // IMPORTANT: _method: 'put' avec post() permet d'envoyer un HTTP POST (seul mode supportant $_FILES en PHP)
     const { data, setData, post, processing } = useForm({
         _method: 'put',
         settings: settings.map((s) => ({ id: s.id, value: s.value })),
@@ -87,7 +86,6 @@ export default function Edit({ settings }) {
 
     const submit = (e) => {
         e.preventDefault();
-        // Utiliser post() au lieu de put() pour que PHP traite correctement multipart/form-data et les fichiers
         post(route('admin.settings.update'), {
             forceFormData: true,
             onSuccess: () => {
@@ -103,8 +101,8 @@ export default function Edit({ settings }) {
 
             <form onSubmit={submit} className="space-y-10">
                 {Object.entries(grouped).map(([group, items]) => (
-                    <fieldset key={group} className="rounded-xl border border-soil-700 bg-soil-900/60 p-5">
-                        <legend className="px-1 font-display text-base font-semibold text-sand-100">
+                    <fieldset key={group} className="rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 p-5 shadow-sm dark:shadow-none">
+                        <legend className="px-1 font-display text-base font-semibold text-gray-900 dark:text-sand-100">
                             {groupLabels[group] || group}
                         </legend>
                         <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -141,12 +139,12 @@ export default function Edit({ settings }) {
 
                                                 <label
                                                     htmlFor={`s-${s.id}`}
-                                                    className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-soil-600 bg-soil-800/50 px-4 py-3 transition hover:border-yolk-500 hover:bg-soil-800"
+                                                    className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-gray-300 dark:border-soil-600 bg-gray-50 dark:bg-soil-800/50 px-4 py-3 transition hover:border-yolk-500 hover:bg-gray-100 dark:hover:bg-soil-800"
                                                 >
-                                                    <span className="text-xs text-yolk-400">
+                                                    <span className="text-xs text-yolk-500">
                                                         {s.type === 'image' ? '📷' : '🎬'}
                                                     </span>
-                                                    <span className="text-xs text-sand-400">
+                                                    <span className="text-xs text-gray-500 dark:text-sand-400">
                                                         {localPreviews[s.id]
                                                             ? 'Changer le fichier sélectionné'
                                                             : s.value
@@ -163,7 +161,7 @@ export default function Edit({ settings }) {
                                                 </label>
 
                                                 {s.value && !localPreviews[s.id] && (
-                                                    <p className="text-[11px] text-sand-500">
+                                                    <p className="text-[11px] text-gray-400 dark:text-sand-500">
                                                         Fichier actuel : <span className="font-mono">{s.value.split('/').pop()}</span>
                                                     </p>
                                                 )}

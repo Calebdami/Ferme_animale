@@ -11,19 +11,19 @@ export default function News({ articles }) {
                 <SectionTitle eyebrow="À la une" title="Actualités de la ferme" />
                 <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {articles.data.map((article) => (
-                        <Link key={article.id} href={route('news.show', article.slug)} className="group overflow-hidden rounded-xl border border-soil-700 bg-soil-900/60">
-                            <div className="aspect-video overflow-hidden bg-soil-800">
+                        <Link key={article.id} href={route('news.show', article.slug)} className="group overflow-hidden rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 shadow-sm dark:shadow-none">
+                            <div className="aspect-video overflow-hidden bg-gray-100 dark:bg-soil-800">
                                 {article.cover_image_url && (
                                     <img src={article.cover_image_url} className="h-full w-full object-cover transition group-hover:scale-105" />
                                 )}
                             </div>
                             <div className="p-4">
-                                <h3 className="font-display text-base font-semibold text-sand-100">{article.title}</h3>
-                                {article.excerpt && <p className="mt-1 text-sm text-sand-500">{article.excerpt}</p>}
+                                <h3 className="font-display text-base font-semibold text-gray-900 dark:text-sand-100">{article.title}</h3>
+                                {article.excerpt && <p className="mt-1 text-sm text-gray-500 dark:text-sand-500">{article.excerpt}</p>}
                             </div>
                         </Link>
                     ))}
-                    {articles.data.length === 0 && <p className="col-span-full py-10 text-center text-sand-500">Aucun article pour le moment.</p>}
+                    {articles.data.length === 0 && <p className="col-span-full py-10 text-center text-gray-400 dark:text-sand-500">Aucun article pour le moment.</p>}
                 </div>
 
                 {articles.links?.length > 3 && (
@@ -33,7 +33,7 @@ export default function News({ articles }) {
                                 key={i}
                                 href={link.url || ''}
                                 dangerouslySetInnerHTML={{ __html: link.label }}
-                                className={`rounded-lg px-3 py-1.5 text-sm ${link.active ? 'bg-yolk-500 text-soil-950' : 'text-sand-400 hover:text-yolk-400'} ${!link.url ? 'pointer-events-none opacity-40' : ''}`}
+                                className={`rounded-lg px-3 py-1.5 text-sm ${link.active ? 'bg-yolk-500 text-soil-950' : 'text-gray-600 dark:text-sand-400 hover:text-yolk-500'} ${!link.url ? 'pointer-events-none opacity-40' : ''}`}
                             />
                         ))}
                     </div>

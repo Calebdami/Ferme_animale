@@ -5,27 +5,23 @@
 @tailwind utilities;
 
 @layer base {
-    /*
-     * Initialisation anti-flash : applique le thème AVANT le premier rendu.
-     * Le localStorage est lu ici pour éviter un clignotement blanc→sombre.
-     */
     html {
         @apply scroll-smooth;
     }
 
-    /* ─── Mode sombre (défaut) ─── */
+    /* ─── Mode sombre (classe .dark sur <html>) ─── */
     body {
-        @apply bg-soil-950 text-sand-100 antialiased transition-colors duration-200;
+        @apply bg-white text-gray-900 antialiased transition-colors duration-200;
     }
 
-    /* ─── Mode clair ─── */
-    html:not(.dark) body {
-        @apply bg-amber-50 text-stone-800;
+    .dark body {
+        @apply bg-soil-950 text-sand-100;
     }
 
     ::selection {
         @apply bg-yolk-500 text-soil-950;
     }
+
     :focus-visible {
         @apply outline outline-2 outline-offset-2 outline-yolk-400;
     }
@@ -33,17 +29,13 @@
 
 @layer components {
     .eggcrack-divider {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cpath d='M0 12 L60 12 L75 4 L90 20 L110 8 L130 12 L400 12' fill='none' stroke='%23544A38' stroke-width='1.5'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cpath d='M0 12 L60 12 L75 4 L90 20 L110 8 L130 12 L400 12' fill='none' stroke='%23d1d5db' stroke-width='1.5'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: center;
         background-size: 100% 100%;
     }
 
-    /* ─── Surcharges mode clair pour le header public ─── */
-    html:not(.dark) .light-header {
-        @apply border-amber-200 bg-amber-50/95;
-    }
-    html:not(.dark) .light-text {
-        @apply border-amber-300 text-stone-700;
+    .dark .eggcrack-divider {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cpath d='M0 12 L60 12 L75 4 L90 20 L110 8 L130 12 L400 12' fill='none' stroke='%23544A38' stroke-width='1.5'/%3E%3C/svg%3E");
     }
 }

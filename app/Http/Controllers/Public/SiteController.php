@@ -25,7 +25,6 @@ class SiteController extends Controller
                 continue;
             }
             $setting = $settings[$key];
-            // Pour les champs image/vidéo, retourner l'URL complète via Storage
             if (in_array($setting->type, ['image', 'video'], true) && $setting->value) {
                 $out[$key] = \Illuminate\Support\Facades\Storage::disk('public')->url($setting->value);
             } else {
@@ -34,6 +33,16 @@ class SiteController extends Controller
         }
 
         return $out;
+    }
+
+    private function pageOr404(string $slug): Page
+    {
+        $page = Page::where('slug', $slug)->first();
+        if (! $page || ! $page->is_published) {
+            abort(404);
+        }
+
+        return $page;
     }
 
     public function home(): Response
@@ -53,7 +62,7 @@ class SiteController extends Controller
     public function about(): Response
     {
         return Inertia::render('Public/About', [
-            'page' => Page::where('slug', 'a-propos')->first(),
+            'page' => $this->pageOr404('a-propos'),
             'settings' => $this->settingsFor(['founding_year', 'team_size', 'farm_area']),
             'team' => MediaItem::where('collection', 'team')->orderBy('position')->get(),
         ]);
@@ -62,13 +71,17 @@ class SiteController extends Controller
     public function poultry(): Response
     {
         return Inertia::render('Public/Poultry', [
-            'page' => Page::where('slug', 'races-poussins')->first(),
+            'page' => $this->pageOr404('races-poussins'),
             'poultryTypes' => PoultryType::orderBy('position')->get(),
         ]);
     }
 
     public function poultryShow(PoultryType $poultryType): Response
     {
+        if (! $poultryType->is_available) {
+            abort(404);
+        }
+
         return Inertia::render('Public/PoultryShow', [
             'poultryType' => $poultryType,
         ]);
@@ -77,7 +90,7 @@ class SiteController extends Controller
     public function activities(): Response
     {
         return Inertia::render('Public/Activities', [
-            'page' => Page::where('slug', 'nos-activites')->first(),
+            'page' => $this->pageOr404('nos-activites'),
             'activities' => Activity::where('is_published', true)->orderBy('position')->get(),
         ]);
     }
@@ -85,7 +98,7 @@ class SiteController extends Controller
     public function facilities(): Response
     {
         return Inertia::render('Public/Facilities', [
-            'page' => Page::where('slug', 'nos-locaux')->first(),
+            'page' => $this->pageOr404('nos-locaux'),
             'photos' => MediaItem::where('collection', 'facilities')->orderBy('position')->get(),
         ]);
     }
@@ -93,7 +106,7 @@ class SiteController extends Controller
     public function quality(): Response
     {
         return Inertia::render('Public/Quality', [
-            'page' => Page::where('slug', 'qualite-biosecurite')->first(),
+            'page' => $this->pageOr404('qualite-biosecurite'),
         ]);
     }
 
@@ -113,6 +126,10 @@ class SiteController extends Controller
 
     public function newsShow(NewsArticle $article): Response
     {
+        if (! $article->is_published) {
+            abort(404);
+        }
+
         return Inertia::render('Public/NewsShow', [
             'article' => $article,
         ]);
@@ -121,7 +138,7 @@ class SiteController extends Controller
     public function faq(): Response
     {
         return Inertia::render('Public/Faq', [
-            'page' => Page::where('slug', 'faq')->first(),
+            'page' => $this->pageOr404('faq'),
         ]);
     }
 

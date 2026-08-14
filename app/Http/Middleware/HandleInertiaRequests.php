@@ -25,6 +25,7 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
             ],
             'siteName' => fn () => \App\Models\Setting::get('site_name', 'Ferme Avicole'),
+            'publishedPages' => fn () => \App\Models\Page::where('is_published', true)->pluck('slug')->toArray(),
         ];
     }
 }

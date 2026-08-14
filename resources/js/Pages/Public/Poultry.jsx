@@ -37,8 +37,8 @@ export default function Poultry({ page, poultryTypes }) {
                             onClick={() => setFilter(c.value)}
                             className={`rounded-full border px-3.5 py-1.5 text-xs transition ${
                                 filter === c.value
-                                    ? 'border-yolk-500 bg-yolk-500/10 text-yolk-400'
-                                    : 'border-soil-700 text-sand-400 hover:border-yolk-600'
+                                    ? 'border-yolk-500 bg-yolk-500/10 text-yolk-500'
+                                    : 'border-gray-300 dark:border-soil-700 text-gray-500 dark:text-sand-400 hover:border-yolk-500'
                             }`}
                         >
                             {c.label}
@@ -49,7 +49,7 @@ export default function Poultry({ page, poultryTypes }) {
                 <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     {filtered.map((p) => <PoultryCard key={p.id} poultryType={p} />)}
                     {filtered.length === 0 && (
-                        <p className="col-span-full py-10 text-center text-sand-500">Aucune race dans cette catégorie pour le moment.</p>
+                        <p className="col-span-full py-10 text-center text-gray-400 dark:text-sand-500">Aucune race dans cette catégorie pour le moment.</p>
                     )}
                 </div>
             </Container>

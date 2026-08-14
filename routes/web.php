@@ -7,9 +7,12 @@ use App\Http\Controllers\Admin\MediaItemController;
 use App\Http\Controllers\Admin\NewsArticleController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PoultryTypeController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Public\ContactMessageController;
 use App\Http\Controllers\Public\SiteController;
 use Illuminate\Support\Facades\Route;
@@ -35,12 +38,20 @@ Route::post('/contact', [ContactMessageController::class, 'store'])->name('conta
 
 /*
 |--------------------------------------------------------------------------
-| Authentification (admin unique)
+| Authentification (Admin, 2FA & Google)
 |--------------------------------------------------------------------------
 */
 Route::middleware('guest')->group(function () {
     Route::get('/admin/connexion', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('/admin/connexion', [AuthenticatedSessionController::class, 'store']);
+
+    Route::get('/admin/connexion/2fa', [AuthenticatedSessionController::class, 'createTwoFactor'])->name('login.2fa');
+    Route::post('/admin/connexion/2fa', [AuthenticatedSessionController::class, 'storeTwoFactor'])->name('login.2fa.store');
+    Route::post('/admin/connexion/2fa/renvoyer', [AuthenticatedSessionController::class, 'resendTwoFactor'])->name('login.2fa.resend');
+
+    // Google OAuth
+    Route::get('/admin/auth/google', [GoogleAuthController::class, 'redirect'])->name('auth.google');
+    Route::get('/admin/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
 });
 Route::middleware('auth')->post('/admin/deconnexion', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
@@ -88,4 +99,16 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/messages', [AdminContactMessageController::class, 'index'])->name('messages.index');
     Route::put('/messages/{message}', [AdminContactMessageController::class, 'update'])->name('messages.update');
     Route::delete('/messages/{message}', [AdminContactMessageController::class, 'destroy'])->name('messages.destroy');
+
+    // Gestion des administrateurs
+    Route::get('/utilisateurs', [UserController::class, 'index'])->name('users.index');
+    Route::post('/utilisateurs', [UserController::class, 'store'])->name('users.store');
+    Route::patch('/utilisateurs/{user}/statut', [UserController::class, 'toggleActive'])->name('users.toggle-active');
+    Route::delete('/utilisateurs/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Profil & Sécurité (mot de passe, 2FA)
+    Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profil', [ProfileController::class, 'updateProfile'])->name('profile.update');
+    Route::put('/profil/mot-de-passe', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::patch('/profil/2fa', [ProfileController::class, 'toggleTwoFactor'])->name('profile.2fa');
 });

@@ -24,51 +24,51 @@ export default function Contact({ settings }) {
                 <div className="mt-10 grid gap-10 lg:grid-cols-5">
                     <div className="space-y-4 lg:col-span-2">
                         {settings.contact_phone && (
-                            <div className="flex items-start gap-3 rounded-xl border border-soil-700 bg-soil-900/60 p-4">
+                            <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 p-4 shadow-sm dark:shadow-none">
                                 <Icon name="phone" className="mt-0.5 h-5 w-5 text-yolk-500" />
                                 <div>
-                                    <p className="text-xs text-sand-500">Téléphone</p>
-                                    <p className="text-sm text-sand-100">{settings.contact_phone}</p>
+                                    <p className="text-xs text-gray-400 dark:text-sand-500">Téléphone</p>
+                                    <p className="text-sm text-gray-900 dark:text-sand-100">{settings.contact_phone}</p>
                                 </div>
                             </div>
                         )}
                         {settings.contact_email && (
-                            <div className="flex items-start gap-3 rounded-xl border border-soil-700 bg-soil-900/60 p-4">
+                            <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 p-4 shadow-sm dark:shadow-none">
                                 <Icon name="mail" className="mt-0.5 h-5 w-5 text-yolk-500" />
                                 <div>
-                                    <p className="text-xs text-sand-500">E-mail</p>
-                                    <p className="text-sm text-sand-100">{settings.contact_email}</p>
+                                    <p className="text-xs text-gray-400 dark:text-sand-500">E-mail</p>
+                                    <p className="text-sm text-gray-900 dark:text-sand-100">{settings.contact_email}</p>
                                 </div>
                             </div>
                         )}
                         {settings.contact_address && (
-                            <div className="flex items-start gap-3 rounded-xl border border-soil-700 bg-soil-900/60 p-4">
+                            <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 p-4 shadow-sm dark:shadow-none">
                                 <Icon name="pin" className="mt-0.5 h-5 w-5 text-yolk-500" />
                                 <div>
-                                    <p className="text-xs text-sand-500">Adresse</p>
-                                    <p className="whitespace-pre-line text-sm text-sand-100">{settings.contact_address}</p>
+                                    <p className="text-xs text-gray-400 dark:text-sand-500">Adresse</p>
+                                    <p className="whitespace-pre-line text-sm text-gray-900 dark:text-sand-100">{settings.contact_address}</p>
                                 </div>
                             </div>
                         )}
                         {settings.contact_hours && (
-                            <div className="flex items-start gap-3 rounded-xl border border-soil-700 bg-soil-900/60 p-4">
+                            <div className="flex items-start gap-3 rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 p-4 shadow-sm dark:shadow-none">
                                 <Icon name="clock" className="mt-0.5 h-5 w-5 text-yolk-500" />
                                 <div>
-                                    <p className="text-xs text-sand-500">Horaires</p>
-                                    <p className="whitespace-pre-line text-sm text-sand-100">{settings.contact_hours}</p>
+                                    <p className="text-xs text-gray-400 dark:text-sand-500">Horaires</p>
+                                    <p className="whitespace-pre-line text-sm text-gray-900 dark:text-sand-100">{settings.contact_hours}</p>
                                 </div>
                             </div>
                         )}
                         {settings.map_embed_url && (
-                            <div className="overflow-hidden rounded-xl border border-soil-700">
+                            <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-soil-700">
                                 <iframe src={settings.map_embed_url} className="h-56 w-full" loading="lazy" title="Localisation de la ferme" />
                             </div>
                         )}
                     </div>
 
-                    <form onSubmit={submit} className="space-y-4 rounded-xl border border-soil-700 bg-soil-900/60 p-6 lg:col-span-3">
+                    <form onSubmit={submit} className="space-y-4 rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 p-6 lg:col-span-3 shadow-sm dark:shadow-none">
                         {wasSuccessful && (
-                            <p className="rounded-lg border border-pasture-500/40 bg-pasture-500/10 p-3 text-sm text-pasture-400">
+                            <p className="rounded-lg border border-pasture-500/40 bg-pasture-500/10 p-3 text-sm text-pasture-500">
                                 Merci, votre message a bien été envoyé.
                             </p>
                         )}

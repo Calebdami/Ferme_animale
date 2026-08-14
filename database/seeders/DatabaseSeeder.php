@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
     private function seedAdmin(): void
     {
         User::firstOrCreate(
-            ['email' => env('ADMIN_EMAIL', 'admin@ferme-avicole.test')],
+            ['email' => env('ADMIN_EMAIL', 'damilarekpanou@gmail.com')],
             [
                 'name' => 'Administrateur',
-                'password' => Hash::make(env('ADMIN_PASSWORD', 'changeme123')),
+                'password' => Hash::make(env('ADMIN_PASSWORD', '123456789')),
                 'email_verified_at' => now(),
             ]
         );

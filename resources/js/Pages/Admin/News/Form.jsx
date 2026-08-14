@@ -63,7 +63,7 @@ export default function Form({ article }) {
                     <Label htmlFor="cover_image">Image de couverture</Label>
 
                     {previewSrc && (
-                        <div className="relative mb-2 overflow-hidden rounded-lg border border-soil-700">
+                        <div className="relative mb-2 overflow-hidden rounded-lg border border-gray-200 dark:border-soil-700 bg-gray-100 dark:bg-soil-800">
                             <img src={previewSrc} className="h-40 w-full object-cover" alt="Aperçu" />
                             {localPreview && (
                                 <span className="absolute right-2 top-2 rounded-full bg-yolk-500 px-2 py-0.5 text-[10px] font-semibold text-soil-950">
@@ -75,10 +75,10 @@ export default function Form({ article }) {
 
                     <label
                         htmlFor="cover_image"
-                        className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-soil-600 bg-soil-800/50 px-4 py-3 transition hover:border-yolk-500 hover:bg-soil-800"
+                        className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-gray-300 dark:border-soil-600 bg-gray-50 dark:bg-soil-800/50 px-4 py-3 transition hover:border-yolk-500 hover:bg-gray-100 dark:hover:bg-soil-800"
                     >
-                        <span className="text-xs text-yolk-400">📷</span>
-                        <span className="text-xs text-sand-400">
+                        <span className="text-xs text-yolk-500">📷</span>
+                        <span className="text-xs text-gray-500 dark:text-sand-400">
                             {localPreview ? 'Changer le fichier sélectionné' : previewSrc ? "Remplacer l'image actuelle" : 'Choisir une image de couverture'}
                         </span>
                         <input
