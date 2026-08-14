@@ -6,11 +6,11 @@ export default function ActivityCard({ activity }) {
     const focalY = activity.focal_y ?? 50;
     const zoom = activity.zoom ?? 1;
 
-    return (
-        <Link
-            href={activity.slug ? route('activities.show', activity.slug) : route('activities')}
-            className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 transition hover:border-yolk-500/60 dark:hover:border-yolk-600/60 shadow-sm dark:shadow-none"
-        >
+    // Si slug est null, pas de lien vers le détail
+    const hasDetail = !!activity.slug && (activity.content || (activity.media_list && activity.media_list.length > 0));
+
+    const cardContent = (
+        <>
             {activity.cover_image_url && (
                 <div className="aspect-[16/9] w-full overflow-hidden bg-gray-100 dark:bg-soil-800">
                     <img
@@ -40,11 +40,29 @@ export default function ActivityCard({ activity }) {
                     )}
                 </div>
 
-                <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-yolk-500 group-hover:underline pt-2">
-                    <span>En savoir plus</span>
-                    <span>→</span>
-                </div>
+                {hasDetail && (
+                    <div className="mt-4 flex items-center gap-1.5 text-xs font-semibold text-yolk-500 group-hover:underline pt-2">
+                        <span>En savoir plus</span>
+                        <span>→</span>
+                    </div>
+                )}
             </div>
-        </Link>
+        </>
+    );
+
+    const baseClass = "group flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 transition hover:border-yolk-500/60 dark:hover:border-yolk-600/60 shadow-sm dark:shadow-none";
+
+    if (hasDetail) {
+        return (
+            <Link href={route('activities.show', activity.slug)} className={baseClass}>
+                {cardContent}
+            </Link>
+        );
+    }
+
+    return (
+        <div className={baseClass}>
+            {cardContent}
+        </div>
     );
 }

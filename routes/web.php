@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Public\ContactMessageController;
 use App\Http\Controllers\Public\SiteController;
+use App\Models\MediaItem;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -80,6 +81,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/medias', [MediaItemController::class, 'index'])->name('media.index');
     Route::post('/medias', [MediaItemController::class, 'store'])->name('media.store');
     Route::delete('/medias/{mediaItem}', [MediaItemController::class, 'destroy'])->name('media.destroy');
+    
+    // API JSON pour récupérer les médias existants dans les modales
+    Route::get('/api/medias', function () {
+        return response()->json(MediaItem::orderBy('id', 'desc')->get());
+    })->name('api.medias');
 
     Route::get('/activites', [ActivityController::class, 'index'])->name('activities.index');
     Route::post('/activites', [ActivityController::class, 'store'])->name('activities.store');

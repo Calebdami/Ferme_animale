@@ -20,6 +20,20 @@ export default function About({ page, settings, team }) {
                     <StatCard value={settings.farm_area} label="Superficie exploitée" />
                 </div>
 
+                {/* Image d'illustration */}
+                {page?.hero_image_url && (
+                    <div className="mt-10 overflow-hidden rounded-2xl border border-gray-100 dark:border-soil-800 shadow-sm dark:shadow-none">
+                        <img
+                            src={page.hero_image_url}
+                            alt={page.title || 'Illustration'}
+                            className="w-full object-cover max-h-[480px]"
+                            style={{
+                                objectPosition: `${page.hero_focal_x ?? 50}% ${page.hero_focal_y ?? 50}%`,
+                            }}
+                        />
+                    </div>
+                )}
+
                 {page?.content && (
                     <div
                         className="mt-10 max-w-3xl text-gray-600 dark:text-sand-300 prose dark:prose-invert"

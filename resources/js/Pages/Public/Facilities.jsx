@@ -13,6 +13,20 @@ export default function Facilities({ page, photos = [] }) {
             <Container className="py-14 sm:py-20">
                 <SectionTitle eyebrow="Nos infrastructures" title={page?.title || 'Nos installations'} subtitle={page?.subtitle} />
 
+                {/* Image d'illustration de la page */}
+                {page?.hero_image_url && (
+                    <div className="mt-10 overflow-hidden rounded-2xl border border-gray-100 dark:border-soil-800 shadow-sm dark:shadow-none">
+                        <img
+                            src={page.hero_image_url}
+                            alt={page.title || 'Nos installations'}
+                            className="w-full object-cover max-h-[480px]"
+                            style={{
+                                objectPosition: `${page.hero_focal_x ?? 50}% ${page.hero_focal_y ?? 50}%`,
+                            }}
+                        />
+                    </div>
+                )}
+
                 {page?.content && (
                     <div
                         className="mt-6 max-w-3xl text-gray-600 dark:text-sand-300 prose dark:prose-invert"
