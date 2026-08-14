@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\ContactMessageController as AdminContactMessageController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\MediaItemController;
 use App\Http\Controllers\Admin\NewsArticleController;
 use App\Http\Controllers\Admin\PageController;
@@ -27,6 +28,7 @@ Route::get('/a-propos', [SiteController::class, 'about'])->name('about');
 Route::get('/races-poussins', [SiteController::class, 'poultry'])->name('poultry.index');
 Route::get('/races-poussins/{poultryType:slug}', [SiteController::class, 'poultryShow'])->name('poultry.show');
 Route::get('/nos-activites', [SiteController::class, 'activities'])->name('activities');
+Route::get('/nos-activites/{activity:slug}', [SiteController::class, 'activityShow'])->name('activities.show');
 Route::get('/nos-locaux', [SiteController::class, 'facilities'])->name('facilities');
 Route::get('/qualite-biosecurite', [SiteController::class, 'quality'])->name('quality');
 Route::get('/galerie', [SiteController::class, 'gallery'])->name('gallery');
@@ -83,6 +85,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::post('/activites', [ActivityController::class, 'store'])->name('activities.store');
     Route::put('/activites/{activity}', [ActivityController::class, 'update'])->name('activities.update');
     Route::delete('/activites/{activity}', [ActivityController::class, 'destroy'])->name('activities.destroy');
+
+    Route::resource('faq', FaqController::class)->except(['show', 'create', 'edit']);
 
     Route::get('/temoignages', [TestimonialController::class, 'index'])->name('testimonials.index');
     Route::post('/temoignages', [TestimonialController::class, 'store'])->name('testimonials.store');

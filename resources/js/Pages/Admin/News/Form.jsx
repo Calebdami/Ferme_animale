@@ -1,7 +1,9 @@
 import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { Button, Label, TextInput, Textarea, Toggle } from '@/Components/Form/Field';
+import { Button, Label, TextInput, Toggle } from '@/Components/Form/Field';
+import FocalPointPicker from '@/Components/FocalPointPicker';
+import RichTextEditor from '@/Components/RichTextEditor';
 
 export default function Form({ article }) {
     const editing = !!article;
@@ -12,6 +14,9 @@ export default function Form({ article }) {
         content: article?.content || '',
         is_published: article?.is_published ?? true,
         cover_image: null,
+        focal_x: article?.focal_x ?? 50,
+        focal_y: article?.focal_y ?? 50,
+        zoom: article?.zoom ?? 1,
     });
 
     const [localPreview, setLocalPreview] = useState(null);
@@ -22,6 +27,15 @@ export default function Form({ article }) {
         if (localPreview) URL.revokeObjectURL(localPreview);
         setLocalPreview(URL.createObjectURL(file));
         setData('cover_image', file);
+    };
+
+    const handleFocalChange = ({ focalX, focalY, zoom }) => {
+        setData((prev) => ({
+            ...prev,
+            focal_x: focalX,
+            focal_y: focalY,
+            zoom: zoom,
+        }));
     };
 
     const submit = (e) => {
@@ -54,28 +68,20 @@ export default function Form({ article }) {
                     <Label htmlFor="excerpt">Résumé (affiché dans les listes)</Label>
                     <TextInput id="excerpt" value={data.excerpt} onChange={(e) => setData('excerpt', e.target.value)} />
                 </div>
-                <div>
-                    <Label htmlFor="content">Contenu de l'article</Label>
-                    <Textarea id="content" rows={10} value={data.content} onChange={(e) => setData('content', e.target.value)} />
-                </div>
+
+                {/* Éditeur de texte riche */}
+                <RichTextEditor
+                    label="Contenu de l'article"
+                    value={data.content}
+                    onChange={(html) => setData('content', html)}
+                />
 
                 <div>
                     <Label htmlFor="cover_image">Image de couverture</Label>
 
-                    {previewSrc && (
-                        <div className="relative mb-2 overflow-hidden rounded-lg border border-gray-200 dark:border-soil-700 bg-gray-100 dark:bg-soil-800">
-                            <img src={previewSrc} className="h-40 w-full object-cover" alt="Aperçu" />
-                            {localPreview && (
-                                <span className="absolute right-2 top-2 rounded-full bg-yolk-500 px-2 py-0.5 text-[10px] font-semibold text-soil-950">
-                                    Non enregistré
-                                </span>
-                            )}
-                        </div>
-                    )}
-
                     <label
                         htmlFor="cover_image"
-                        className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-gray-300 dark:border-soil-600 bg-gray-50 dark:bg-soil-800/50 px-4 py-3 transition hover:border-yolk-500 hover:bg-gray-100 dark:hover:bg-soil-800"
+                        className="mb-3 flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-gray-300 dark:border-soil-600 bg-gray-50 dark:bg-soil-800/50 px-4 py-3 transition hover:border-yolk-500 hover:bg-gray-100 dark:hover:bg-soil-800"
                     >
                         <span className="text-xs text-yolk-500">📷</span>
                         <span className="text-xs text-gray-500 dark:text-sand-400">
@@ -89,6 +95,17 @@ export default function Form({ article }) {
                             className="sr-only"
                         />
                     </label>
+
+                    {previewSrc && (
+                        <FocalPointPicker
+                            src={previewSrc}
+                            focalX={data.focal_x}
+                            focalY={data.focal_y}
+                            zoom={data.zoom}
+                            onChange={handleFocalChange}
+                            label="Zone de cadrage & Zoom"
+                        />
+                    )}
                 </div>
 
                 <Toggle

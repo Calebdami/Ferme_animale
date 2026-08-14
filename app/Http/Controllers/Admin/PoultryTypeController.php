@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ContentUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\PoultryType;
 use Illuminate\Http\RedirectResponse;
@@ -35,6 +36,7 @@ class PoultryTypeController extends Controller
         }
 
         PoultryType::create($data);
+        broadcast(new ContentUpdated('poultry'));
 
         return redirect()->route('admin.poultry-types.index')->with('success', 'Type de volaille créé.');
     }
@@ -56,6 +58,7 @@ class PoultryTypeController extends Controller
         }
 
         $poultryType->update($data);
+        broadcast(new ContentUpdated('poultry'));
 
         return redirect()->route('admin.poultry-types.index')->with('success', 'Type de volaille mis à jour.');
     }
@@ -66,6 +69,7 @@ class PoultryTypeController extends Controller
             Storage::disk('public')->delete($poultryType->image);
         }
         $poultryType->delete();
+        broadcast(new ContentUpdated('poultry'));
 
         return back()->with('success', 'Type de volaille supprimé.');
     }
@@ -73,15 +77,18 @@ class PoultryTypeController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'category' => ['required', 'string', 'max:100'],
-            'origin' => ['nullable', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
+            'name'            => ['required', 'string', 'max:255'],
+            'category'        => ['required', 'string', 'max:100'],
+            'origin'          => ['nullable', 'string', 'max:255'],
+            'description'     => ['nullable', 'string'],
             'characteristics' => ['nullable', 'string'],
-            'available_ages' => ['nullable', 'string', 'max:255'],
-            'price' => ['nullable', 'string', 'max:100'],
-            'is_available' => ['boolean'],
-            'position' => ['nullable', 'integer'],
+            'available_ages'  => ['nullable', 'string', 'max:255'],
+            'price'           => ['nullable', 'string', 'max:100'],
+            'is_available'    => ['boolean'],
+            'position'        => ['nullable', 'integer'],
+            'focal_x'         => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'focal_y'         => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'zoom'            => ['nullable', 'numeric', 'min:1', 'max:5'],
         ]);
     }
 }

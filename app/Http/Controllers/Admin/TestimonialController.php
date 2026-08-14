@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ContentUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
 use Illuminate\Http\RedirectResponse;
@@ -21,6 +22,7 @@ class TestimonialController extends Controller
     public function store(Request $request): RedirectResponse
     {
         Testimonial::create($this->validated($request));
+        broadcast(new ContentUpdated('testimonials'));
 
         return back()->with('success', 'Témoignage ajouté.');
     }
@@ -28,6 +30,7 @@ class TestimonialController extends Controller
     public function update(Request $request, Testimonial $testimonial): RedirectResponse
     {
         $testimonial->update($this->validated($request));
+        broadcast(new ContentUpdated('testimonials'));
 
         return back()->with('success', 'Témoignage mis à jour.');
     }
@@ -35,6 +38,7 @@ class TestimonialController extends Controller
     public function destroy(Testimonial $testimonial): RedirectResponse
     {
         $testimonial->delete();
+        broadcast(new ContentUpdated('testimonials'));
 
         return back()->with('success', 'Témoignage supprimé.');
     }

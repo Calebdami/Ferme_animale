@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
-class PoultryType extends Model
+class Faq extends Model
 {
     protected $fillable = [
-        'name', 'slug', 'category', 'origin', 'description', 'characteristics',
-        'available_ages', 'price', 'image', 'focal_x', 'focal_y', 'zoom', 'is_available', 'position',
+        'question', 'answer', 'image', 'focal_x', 'focal_y', 'zoom', 'position', 'is_published',
     ];
 
     protected $casts = [
-        'is_available' => 'boolean',
+        'is_published' => 'boolean',
         'focal_x' => 'float',
         'focal_y' => 'float',
         'zoom' => 'float',
+        'position' => 'integer',
     ];
 
     protected $appends = ['image_url'];

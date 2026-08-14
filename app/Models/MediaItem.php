@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class MediaItem extends Model
 {
-    protected $fillable = ['type', 'collection', 'path', 'title', 'alt_text', 'position'];
+    protected $fillable = ['type', 'collection', 'path', 'focal_x', 'focal_y', 'zoom', 'title', 'alt_text', 'position'];
+
+    protected $casts = [
+        'focal_x' => 'float',
+        'focal_y' => 'float',
+        'zoom' => 'float',
+    ];
 
     protected function url(): \Illuminate\Database\Eloquent\Casts\Attribute
     {

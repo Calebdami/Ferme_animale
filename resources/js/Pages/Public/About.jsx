@@ -3,8 +3,11 @@ import PublicLayout from '@/Layouts/PublicLayout';
 import Container from '@/Components/Container';
 import SectionTitle from '@/Components/SectionTitle';
 import StatCard from '@/Components/StatCard';
+import { useRealtimeContent } from '@/hooks/useRealtimeContent';
 
 export default function About({ page, settings, team }) {
+    useRealtimeContent(['pages', 'settings', 'media']);
+
     return (
         <PublicLayout>
             <Head title={page?.title || 'Qui sommes-nous'} />
@@ -17,9 +20,12 @@ export default function About({ page, settings, team }) {
                     <StatCard value={settings.farm_area} label="Superficie exploitée" />
                 </div>
 
-                <div className="mt-10 max-w-2xl whitespace-pre-line text-gray-600 dark:text-sand-300">
-                    {page?.content}
-                </div>
+                {page?.content && (
+                    <div
+                        className="mt-10 max-w-3xl text-gray-600 dark:text-sand-300 prose dark:prose-invert"
+                        dangerouslySetInnerHTML={{ __html: page.content }}
+                    />
+                )}
 
                 {team.length > 0 && (
                     <div className="mt-14">

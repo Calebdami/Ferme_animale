@@ -1,7 +1,9 @@
 import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { Button, Label, TextInput, Textarea, Toggle } from '@/Components/Form/Field';
+import { Button, Label, TextInput, Toggle } from '@/Components/Form/Field';
+import FocalPointPicker from '@/Components/FocalPointPicker';
+import RichTextEditor from '@/Components/RichTextEditor';
 
 export default function Edit({ page }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -12,6 +14,9 @@ export default function Edit({ page }) {
         meta_description: page.meta_description || '',
         is_published: page.is_published,
         hero_image: null,
+        hero_focal_x: page.hero_focal_x ?? 50,
+        hero_focal_y: page.hero_focal_y ?? 50,
+        hero_zoom: page.hero_zoom ?? 1,
     });
 
     const [localPreview, setLocalPreview] = useState(null);
@@ -22,6 +27,15 @@ export default function Edit({ page }) {
         if (localPreview) URL.revokeObjectURL(localPreview);
         setLocalPreview(URL.createObjectURL(file));
         setData('hero_image', file);
+    };
+
+    const handleFocalChange = ({ focalX, focalY, zoom }) => {
+        setData((prev) => ({
+            ...prev,
+            hero_focal_x: focalX,
+            hero_focal_y: focalY,
+            hero_zoom: zoom,
+        }));
     };
 
     const submit = (e) => {
@@ -49,10 +63,14 @@ export default function Edit({ page }) {
                     <Label htmlFor="subtitle">Sous-titre</Label>
                     <TextInput id="subtitle" value={data.subtitle} onChange={(e) => setData('subtitle', e.target.value)} />
                 </div>
-                <div>
-                    <Label htmlFor="content">Contenu</Label>
-                    <Textarea id="content" rows={10} value={data.content} onChange={(e) => setData('content', e.target.value)} />
-                </div>
+
+                {/* Éditeur de texte riche */}
+                <RichTextEditor
+                    label="Contenu de la page"
+                    value={data.content}
+                    onChange={(html) => setData('content', html)}
+                />
+
                 <div>
                     <Label htmlFor="meta_description">Description SEO (courte)</Label>
                     <TextInput id="meta_description" value={data.meta_description} onChange={(e) => setData('meta_description', e.target.value)} />
@@ -61,20 +79,9 @@ export default function Edit({ page }) {
                 <div>
                     <Label htmlFor="hero_image">Image d'illustration</Label>
 
-                    {previewSrc && (
-                        <div className="relative mb-2 overflow-hidden rounded-lg border border-gray-200 dark:border-soil-700 bg-gray-100 dark:bg-soil-800">
-                            <img src={previewSrc} className="h-40 w-full object-cover" alt="Aperçu" />
-                            {localPreview && (
-                                <span className="absolute right-2 top-2 rounded-full bg-yolk-500 px-2 py-0.5 text-[10px] font-semibold text-soil-950">
-                                    Non enregistré
-                                </span>
-                            )}
-                        </div>
-                    )}
-
                     <label
                         htmlFor="hero_image"
-                        className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-gray-300 dark:border-soil-600 bg-gray-50 dark:bg-soil-800/50 px-4 py-3 transition hover:border-yolk-500 hover:bg-gray-100 dark:hover:bg-soil-800"
+                        className="mb-3 flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-gray-300 dark:border-soil-600 bg-gray-50 dark:bg-soil-800/50 px-4 py-3 transition hover:border-yolk-500 hover:bg-gray-100 dark:hover:bg-soil-800"
                     >
                         <span className="text-xs text-yolk-500">📷</span>
                         <span className="text-xs text-gray-500 dark:text-sand-400">
@@ -88,6 +95,17 @@ export default function Edit({ page }) {
                             className="sr-only"
                         />
                     </label>
+
+                    {previewSrc && (
+                        <FocalPointPicker
+                            src={previewSrc}
+                            focalX={data.hero_focal_x}
+                            focalY={data.hero_focal_y}
+                            zoom={data.hero_zoom}
+                            onChange={handleFocalChange}
+                            label="Zone d'affichage & Cadrage tactile"
+                        />
+                    )}
                 </div>
 
                 <Toggle

@@ -11,6 +11,10 @@ const categoryLabels = {
 };
 
 export default function PoultryCard({ poultryType }) {
+    const focalX = poultryType.focal_x ?? 50;
+    const focalY = poultryType.focal_y ?? 50;
+    const zoom = poultryType.zoom ?? 1;
+
     return (
         <Link
             href={route('poultry.show', poultryType.slug)}
@@ -21,7 +25,11 @@ export default function PoultryCard({ poultryType }) {
                     <img
                         src={poultryType.image_url}
                         alt={poultryType.name}
-                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                        className="h-full w-full object-cover transition duration-500"
+                        style={{
+                            objectPosition: `${focalX}% ${focalY}%`,
+                            transform: `scale(${zoom})`,
+                        }}
                     />
                 ) : (
                     <div className="flex h-full items-center justify-center text-gray-400 dark:text-sand-500">Photo à venir</div>

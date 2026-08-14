@@ -8,8 +8,15 @@ import PoultryCard from '@/Components/PoultryCard';
 import TestimonialCard from '@/Components/TestimonialCard';
 import EggDivider from '@/Components/EggDivider';
 import Eyebrow from '@/Components/Eyebrow';
+import { useRealtimeContent } from '@/hooks/useRealtimeContent';
 
 export default function Home({ settings, activities, testimonials, news, featuredPoultry }) {
+    useRealtimeContent('*');
+
+    const heroFocalX = settings.hero_focal_x || 50;
+    const heroFocalY = settings.hero_focal_y || 50;
+    const heroZoom = settings.hero_zoom || 1;
+
     return (
         <PublicLayout>
             <Head title="Accueil" />
@@ -38,11 +45,19 @@ export default function Home({ settings, activities, testimonials, news, feature
                         {settings.hero_video ? (
                             <video src={settings.hero_video} autoPlay muted loop playsInline className="h-full w-full object-cover" />
                         ) : settings.hero_image ? (
-                            <img src={settings.hero_image} alt="Ferme avicole" className="h-full w-full object-cover" />
+                            <img
+                                src={settings.hero_image}
+                                alt="Ferme avicole"
+                                className="h-full w-full object-cover transition duration-300"
+                                style={{
+                                    objectPosition: `${heroFocalX}% ${heroFocalY}%`,
+                                    transform: `scale(${heroZoom})`,
+                                }}
+                            />
                         ) : (
                             <div className="flex h-full flex-col items-center justify-center gap-2 text-gray-400 dark:text-sand-500">
                                 <span className="text-3xl">🐔</span>
-                                <span className="text-sm">Ajoutez une image ou vidéo depuis l'admin</span>
+                                <span className="text-sm">Ferme Avicole Performante</span>
                             </div>
                         )}
                     </div>
@@ -117,7 +132,14 @@ export default function Home({ settings, activities, testimonials, news, feature
                                 <Link key={article.id} href={route('news.show', article.slug)} className="group overflow-hidden rounded-xl border border-gray-200 dark:border-soil-700 bg-white dark:bg-soil-900/60 shadow-sm dark:shadow-none">
                                     <div className="aspect-video overflow-hidden bg-gray-100 dark:bg-soil-800">
                                         {article.cover_image_url && (
-                                            <img src={article.cover_image_url} className="h-full w-full object-cover transition group-hover:scale-105" />
+                                            <img
+                                                src={article.cover_image_url}
+                                                className="h-full w-full object-cover transition group-hover:scale-105"
+                                                style={{
+                                                    objectPosition: `${article.focal_x ?? 50}% ${article.focal_y ?? 50}%`,
+                                                    transform: `scale(${article.zoom ?? 1})`,
+                                                }}
+                                            />
                                         )}
                                     </div>
                                     <div className="p-4">

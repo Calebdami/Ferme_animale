@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use App\Models\Faq;
 use App\Models\MediaItem;
 use App\Models\NewsArticle;
 use App\Models\Page;
@@ -50,6 +51,7 @@ class SiteController extends Controller
         return Inertia::render('Public/Home', [
             'settings' => $this->settingsFor([
                 'site_name', 'hero_title', 'hero_subtitle', 'hero_image', 'hero_video',
+                'hero_focal_x', 'hero_focal_y', 'hero_zoom',
                 'stat_years', 'stat_races', 'stat_capacity', 'stat_clients',
             ]),
             'activities' => Activity::where('is_published', true)->orderBy('position')->get(),
@@ -95,6 +97,17 @@ class SiteController extends Controller
         ]);
     }
 
+    public function activityShow(Activity $activity): Response
+    {
+        if (! $activity->is_published) {
+            abort(404);
+        }
+
+        return Inertia::render('Public/ActivityShow', [
+            'activity' => $activity,
+        ]);
+    }
+
     public function facilities(): Response
     {
         return Inertia::render('Public/Facilities', [
@@ -107,6 +120,7 @@ class SiteController extends Controller
     {
         return Inertia::render('Public/Quality', [
             'page' => $this->pageOr404('qualite-biosecurite'),
+            'media' => MediaItem::where('collection', 'quality')->orderBy('position')->get(),
         ]);
     }
 
@@ -139,6 +153,7 @@ class SiteController extends Controller
     {
         return Inertia::render('Public/Faq', [
             'page' => $this->pageOr404('faq'),
+            'faqs' => Faq::where('is_published', true)->orderBy('position')->orderBy('id')->get(),
         ]);
     }
 

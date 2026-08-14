@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\ContentUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\NewsArticle;
 use Illuminate\Http\RedirectResponse;
@@ -36,6 +37,7 @@ class NewsArticleController extends Controller
         }
 
         NewsArticle::create($data);
+        broadcast(new ContentUpdated('news'));
 
         return redirect()->route('admin.news.index')->with('success', 'Article publié.');
     }
@@ -60,6 +62,7 @@ class NewsArticleController extends Controller
         }
 
         $article->update($data);
+        broadcast(new ContentUpdated('news'));
 
         return redirect()->route('admin.news.index')->with('success', 'Article mis à jour.');
     }
@@ -70,6 +73,7 @@ class NewsArticleController extends Controller
             Storage::disk('public')->delete($article->cover_image);
         }
         $article->delete();
+        broadcast(new ContentUpdated('news'));
 
         return back()->with('success', 'Article supprimé.');
     }
@@ -77,10 +81,13 @@ class NewsArticleController extends Controller
     private function validated(Request $request): array
     {
         return $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'excerpt' => ['nullable', 'string', 'max:500'],
-            'content' => ['nullable', 'string'],
+            'title'        => ['required', 'string', 'max:255'],
+            'excerpt'      => ['nullable', 'string', 'max:500'],
+            'content'      => ['nullable', 'string'],
             'is_published' => ['boolean'],
+            'focal_x'      => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'focal_y'      => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'zoom'         => ['nullable', 'numeric', 'min:1', 'max:5'],
         ]);
     }
 }

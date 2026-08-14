@@ -12,6 +12,7 @@ const links = [
     { label: 'Types de volailles', route: 'admin.poultry-types.index' },
     { label: 'Activités', route: 'admin.activities.index' },
     { label: 'Médias (photos/vidéos)', route: 'admin.media.index' },
+    { label: 'FAQ (Questions)', route: 'admin.faq.index' },
     { label: 'Témoignages', route: 'admin.testimonials.index' },
     { label: 'Actualités', route: 'admin.news.index' },
     { label: 'Messages reçus', route: 'admin.messages.index' },

@@ -3,8 +3,11 @@ import PublicLayout from '@/Layouts/PublicLayout';
 import Container from '@/Components/Container';
 import SectionTitle from '@/Components/SectionTitle';
 import ActivityCard from '@/Components/ActivityCard';
+import { useRealtimeContent } from '@/hooks/useRealtimeContent';
 
 export default function Activities({ page, activities }) {
+    useRealtimeContent(['activities', 'pages']);
+
     return (
         <PublicLayout>
             <Head title={page?.title || 'Nos activités'} />
