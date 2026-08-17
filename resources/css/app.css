@@ -87,6 +87,14 @@
         border-color: rgba(245, 239, 230, 0.16);
     }
 
+    .dark .specie-detail-row dt {
+        color: rgb(245 239 230) !important;
+    }
+
+    .dark .specie-detail-row dd {
+        color: rgb(255 255 255) !important;
+    }
+
     /* Styles pour le rendu du contenu HTML en mode sombre - surpasser les styles prose */
     .dark .prose-content {
         color: rgb(217, 211, 201) !important;

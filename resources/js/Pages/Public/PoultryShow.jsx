@@ -29,27 +29,27 @@ export default function PoultryShow({ poultryType }) {
 
                         <dl className="mt-6 space-y-3 border-t border-gray-200 dark:border-soil-800 pt-6 text-sm">
                             {poultryType.origin && (
-                                <div className="flex justify-between gap-4">
-                                    <dt className="text-gray-500 dark:text-sand-500">Origine</dt>
-                                    <dd className="text-right text-gray-800 dark:text-sand-200">{poultryType.origin}</dd>
+                                <div className="specie-detail-row flex justify-between gap-4">
+                                    <dt className="text-gray-700 dark:text-sand-200">Origine</dt>
+                                    <dd className="text-right text-gray-900 dark:text-sand-50">{poultryType.origin}</dd>
                                 </div>
                             )}
                             {poultryType.characteristics && (
-                                <div className="flex justify-between gap-4">
-                                    <dt className="text-gray-500 dark:text-sand-500">Caractéristiques</dt>
-                                    <dd className="text-right text-gray-800 dark:text-sand-200">{poultryType.characteristics}</dd>
+                                <div className="specie-detail-row flex justify-between gap-4">
+                                    <dt className="text-gray-700 dark:text-sand-200">Caractéristiques</dt>
+                                    <dd className="text-right text-gray-900 dark:text-sand-50">{poultryType.characteristics}</dd>
                                 </div>
                             )}
                             {poultryType.available_ages && (
-                                <div className="flex justify-between gap-4">
-                                    <dt className="text-gray-500 dark:text-sand-500">Âges disponibles</dt>
-                                    <dd className="text-right text-gray-800 dark:text-sand-200">{poultryType.available_ages}</dd>
+                                <div className="specie-detail-row flex justify-between gap-4">
+                                    <dt className="text-gray-700 dark:text-sand-200">Âges disponibles</dt>
+                                    <dd className="text-right text-gray-900 dark:text-sand-50">{poultryType.available_ages}</dd>
                                 </div>
                             )}
                             {poultryType.price && (
-                                <div className="flex justify-between gap-4">
-                                    <dt className="text-gray-500 dark:text-sand-500">Tarif</dt>
-                                    <dd className="text-right text-gray-800 dark:text-sand-200">{poultryType.price}</dd>
+                                <div className="specie-detail-row flex justify-between gap-4">
+                                    <dt className="text-gray-700 dark:text-sand-200">Tarif</dt>
+                                    <dd className="text-right text-gray-900 dark:text-sand-50">{poultryType.price}</dd>
                                 </div>
                             )}
                         </dl>
