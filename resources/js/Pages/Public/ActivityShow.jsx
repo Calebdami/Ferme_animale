@@ -62,7 +62,7 @@ export default function ActivityShow({ activity }) {
                             Déroulement de l'activité
                         </h2>
                         <div
-                            className="prose-content prose dark:prose-invert max-w-none text-gray-600 dark:text-sand-300"
+                            className="prose-content max-w-none text-gray-600 dark:text-sand-300"
                             dangerouslySetInnerHTML={{ __html: activity.content }}
                         />
                     </div>

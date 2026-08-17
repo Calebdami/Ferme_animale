@@ -15,7 +15,7 @@ export default function Activities({ page, activities }) {
                 <SectionTitle eyebrow="Ce que nous faisons" title={page?.title || 'Nos activités'} subtitle={page?.subtitle} />
                 {page?.content && (
                     <div
-                        className="prose-content mt-6 max-w-3xl prose dark:prose-invert text-gray-600 dark:text-sand-300"
+                        className="prose-content mt-6 max-w-3xl text-gray-600 dark:text-sand-300"
                         dangerouslySetInnerHTML={{ __html: page.content }}
                     />
                 )}

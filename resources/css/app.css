@@ -65,21 +65,21 @@
         @apply max-w-full;
     }
 
-    /* Styles pour le rendu du contenu HTML en mode sombre sur le site vitrine */
-    .dark .prose-content,
-    .dark [class*="content"],
-    .dark article,
-    .dark .ql-editor,
-    .dark .editor-content {
-        @apply text-sand-100;
+    /* Styles pour le rendu du contenu HTML en mode sombre - surpasser les styles prose */
+    .dark .prose-content {
+        color: rgb(217, 211, 201) !important;
     }
 
-    .dark .prose-content p,
-    .dark [class*="content"] p,
-    .dark article p,
-    .dark .ql-editor p,
-    .dark .editor-content p {
-        @apply text-sand-100;
+    .dark .prose-content * {
+        color: rgb(217, 211, 201) !important;
+    }
+
+    .dark .prose-content a {
+        color: #fbbf24 !important;
+    }
+
+    .dark .prose-content a:hover {
+        color: #f59e0b !important;
     }
 
     .dark .prose-content h1,
@@ -87,56 +87,61 @@
     .dark .prose-content h3,
     .dark .prose-content h4,
     .dark .prose-content h5,
-    .dark .prose-content h6,
-    .dark [class*="content"] h1,
-    .dark [class*="content"] h2,
-    .dark [class*="content"] h3,
-    .dark [class*="content"] h4,
-    .dark [class*="content"] h5,
-    .dark [class*="content"] h6,
-    .dark article h1,
-    .dark article h2,
-    .dark article h3,
-    .dark article h4,
-    .dark article h5,
-    .dark article h6,
-    .dark .ql-editor h1,
-    .dark .ql-editor h2,
-    .dark .ql-editor h3,
-    .dark .ql-editor h4,
-    .dark .ql-editor h5,
-    .dark .ql-editor h6,
-    .dark .editor-content h1,
-    .dark .editor-content h2,
-    .dark .editor-content h3,
-    .dark .editor-content h4,
-    .dark .editor-content h5,
-    .dark .editor-content h6 {
+    .dark .prose-content h6 {
+        color: rgb(217, 211, 201) !important;
+    }
+
+    .dark .prose-content strong,
+    .dark .prose-content b {
+        color: rgb(217, 211, 201) !important;
+    }
+
+    .dark .prose-content em,
+    .dark .prose-content i {
+        color: rgb(217, 211, 201) !important;
+    }
+
+    .dark .prose-content blockquote {
+        color: rgb(217, 211, 201) !important;
+        border-color: #d4a574 !important;
+    }
+
+    .dark .prose-content code {
+        color: #e8d7c6 !important;
+        background-color: rgba(69, 50, 40, 0.5) !important;
+    }
+
+    .dark .prose-content pre {
+        background-color: rgba(69, 50, 40, 0.5) !important;
+        color: rgb(217, 211, 201) !important;
+    }
+
+    .dark .prose-content table {
+        border-color: rgba(69, 50, 40, 0.3) !important;
+    }
+
+    .dark .prose-content th,
+    .dark .prose-content td {
+        border-color: rgba(69, 50, 40, 0.3) !important;
+        color: rgb(217, 211, 201) !important;
+    }
+
+    .dark .prose-content ul li,
+    .dark .prose-content ol li {
+        color: rgb(217, 211, 201) !important;
+    }
+
+    /* Backup pour les autres classes de contenu */
+    .dark .editor-content,
+    .dark .ql-editor,
+    .dark article {
         @apply text-sand-100;
     }
 
-    .dark .prose-content li,
-    .dark [class*="content"] li,
-    .dark article li,
-    .dark .ql-editor li,
-    .dark .editor-content li {
+    .dark .editor-content *,
+    .dark .ql-editor *,
+    .dark article * {
         @apply text-sand-100;
-    }
-
-    .dark .prose-content a,
-    .dark [class*="content"] a,
-    .dark article a,
-    .dark .ql-editor a,
-    .dark .editor-content a {
-        @apply text-yolk-400;
-    }
-
-    .dark .prose-content blockquote,
-    .dark [class*="content"] blockquote,
-    .dark article blockquote,
-    .dark .ql-editor blockquote,
-    .dark .editor-content blockquote {
-        @apply text-sand-100 border-yolk-500;
     }
 }
 

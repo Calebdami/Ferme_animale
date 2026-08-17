@@ -29,7 +29,7 @@ export default function Facilities({ page, photos = [] }) {
 
                 {page?.content && (
                     <div
-                        className="mt-6 max-w-3xl text-gray-600 dark:text-sand-300 prose dark:prose-invert prose-content"
+                        className="mt-6 max-w-3xl text-gray-600 dark:text-sand-300 prose-content"
                         dangerouslySetInnerHTML={{ __html: page.content }}
                     />
                 )}

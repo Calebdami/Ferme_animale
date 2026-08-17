@@ -30,7 +30,7 @@ export default function NewsShow({ article }) {
                 )}
                 {article.content && (
                     <div
-                        className="mt-8 max-w-3xl text-gray-600 dark:text-sand-300 prose dark:prose-invert prose-content"
+                        className="mt-8 max-w-3xl text-gray-600 dark:text-sand-300 prose-content"
                         dangerouslySetInnerHTML={{ __html: article.content }}
                     />
                 )}
