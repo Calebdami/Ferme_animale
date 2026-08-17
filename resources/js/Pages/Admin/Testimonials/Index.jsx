@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Button, Label, Select, TextInput, Textarea, Toggle } from '@/Components/Form/Field';
 import ConfirmModal from '@/Components/ConfirmModal';
+import Icon from '@/Components/Icon';
 
 const emptyForm = { author_name: '', author_role: '', content: '', rating: 5, is_published: true };
 
@@ -70,9 +71,23 @@ export default function Index({ testimonials }) {
                             <p className="text-sm font-medium text-gray-900 dark:text-sand-100">{t.author_name}</p>
                             <p className="line-clamp-1 text-xs text-gray-400 dark:text-sand-500">{t.content}</p>
                         </div>
-                        <div className="flex gap-3">
-                            <button onClick={() => edit(t)} className="text-sm text-yolk-500 hover:underline">Modifier</button>
-                            <button onClick={() => setDeletingItem(t)} className="text-sm text-clay-500 hover:underline">Supprimer</button>
+                        <div className="flex gap-2">
+                            <button
+                                onClick={() => edit(t)}
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-yolk-600 transition hover:border-yolk-300 hover:bg-yolk-50 dark:border-soil-700 dark:bg-soil-800 dark:text-yolk-400 dark:hover:bg-soil-700"
+                                aria-label={`Modifier ${t.author_name}`}
+                                title="Modifier"
+                            >
+                                <Icon name="pencil" className="h-4 w-4" />
+                            </button>
+                            <button
+                                onClick={() => setDeletingItem(t)}
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-clay-500 transition hover:border-clay-300 hover:bg-clay-50 dark:border-soil-700 dark:bg-soil-800 dark:text-clay-400 dark:hover:bg-soil-700"
+                                aria-label={`Supprimer ${t.author_name}`}
+                                title="Supprimer"
+                            >
+                                <Icon name="trash" className="h-4 w-4" />
+                            </button>
                         </div>
                     </div>
                 ))}

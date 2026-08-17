@@ -2,6 +2,7 @@ import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import ConfirmModal from '@/Components/ConfirmModal';
+import Icon from '@/Components/Icon';
 
 export default function Index({ messages }) {
     const [deletingItem, setDeletingItem] = useState(null);
@@ -41,9 +42,11 @@ export default function Index({ messages }) {
                                     e.stopPropagation();
                                     setDeletingItem(m);
                                 }}
-                                className="shrink-0 text-xs text-clay-500 hover:underline"
+                                className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-white text-clay-500 transition hover:border-clay-300 hover:bg-clay-50 dark:border-soil-700 dark:bg-soil-800 dark:text-clay-400 dark:hover:bg-soil-700"
+                                aria-label={`Supprimer le message de ${m.name}`}
+                                title="Supprimer"
                             >
-                                Supprimer
+                                <Icon name="trash" className="h-4 w-4" />
                             </button>
                         </div>
                         <p className="mt-3 whitespace-pre-line text-sm text-gray-600 dark:text-sand-300">{m.message}</p>

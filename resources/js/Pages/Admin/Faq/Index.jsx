@@ -5,6 +5,7 @@ import { Button, Label, TextInput, Toggle } from '@/Components/Form/Field';
 import ConfirmModal from '@/Components/ConfirmModal';
 import RichTextEditor from '@/Components/RichTextEditor';
 import FocalPointPicker from '@/Components/FocalPointPicker';
+import Icon from '@/Components/Icon';
 
 const emptyForm = {
     question: '',
@@ -183,19 +184,29 @@ export default function Index({ faqs }) {
                                 )}
                                 <div>
                                     <p className="font-semibold text-sm text-gray-900 dark:text-sand-100">{faq.question}</p>
-                                    <p className="mt-1 text-xs text-gray-500 dark:text-sand-400 line-clamp-2" dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                                    <p className="mt-1 text-xs text-gray-500 dark:text-sand-300 line-clamp-2 prose-content" dangerouslySetInnerHTML={{ __html: faq.answer }} />
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                            <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
                                 <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${faq.is_published ? 'bg-pasture-500/15 text-pasture-600 dark:text-pasture-400' : 'bg-gray-100 dark:bg-soil-800 text-gray-400'}`}>
                                     {faq.is_published ? 'Visible' : 'Masquée'}
                                 </span>
-                                <button onClick={() => edit(faq)} className="text-sm font-medium text-yolk-500 hover:underline">
-                                    Modifier
+                                <button
+                                    onClick={() => edit(faq)}
+                                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-yolk-600 transition hover:border-yolk-300 hover:bg-yolk-50 dark:border-soil-700 dark:bg-soil-800 dark:text-yolk-400 dark:hover:bg-soil-700"
+                                    aria-label={`Modifier ${faq.question}`}
+                                    title="Modifier"
+                                >
+                                    <Icon name="pencil" className="h-4 w-4" />
                                 </button>
-                                <button onClick={() => setDeletingItem(faq)} className="text-sm font-medium text-clay-500 hover:underline">
-                                    Supprimer
+                                <button
+                                    onClick={() => setDeletingItem(faq)}
+                                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-clay-500 transition hover:border-clay-300 hover:bg-clay-50 dark:border-soil-700 dark:bg-soil-800 dark:text-clay-400 dark:hover:bg-soil-700"
+                                    aria-label={`Supprimer ${faq.question}`}
+                                    title="Supprimer"
+                                >
+                                    <Icon name="trash" className="h-4 w-4" />
                                 </button>
                             </div>
                         </div>

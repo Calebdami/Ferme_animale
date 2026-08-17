@@ -84,14 +84,20 @@ export default function AdminLayout({ children, title }) {
                 </div>
             </header>
 
+            {/* Mobile menu overlay */}
             {open && (
-                <div className="border-b border-gray-200 dark:border-soil-800 bg-white dark:bg-soil-900 p-4 lg:hidden">
-                    <Nav />
-                    <div className="mt-4 border-t border-gray-200 dark:border-soil-800 pt-4">
-                        <p className="mb-2 truncate text-xs text-gray-400 dark:text-sand-500">{auth?.user?.email}</p>
-                        <button onClick={() => { setOpen(false); setShowLogoutModal(true); }} className="text-sm text-clay-500 hover:underline">Se déconnecter</button>
+                <>
+                    <div className="fixed inset-0 z-40 bg-black/20 lg:hidden" onClick={() => setOpen(false)}></div>
+                    <div className="fixed inset-0 z-50 top-[65px] bg-white dark:bg-soil-900 overflow-y-auto lg:hidden">
+                        <div className="p-4">
+                            <Nav />
+                            <div className="mt-4 border-t border-gray-200 dark:border-soil-800 pt-4">
+                                <p className="mb-2 truncate text-xs text-gray-400 dark:text-sand-500">{auth?.user?.email}</p>
+                                <button onClick={() => { setOpen(false); setShowLogoutModal(true); }} className="text-sm text-clay-500 hover:underline">Se déconnecter</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </>
             )}
 
             <main className="flex-1 p-4 sm:p-6 lg:p-10">

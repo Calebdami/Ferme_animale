@@ -133,7 +133,7 @@ export default function RichTextEditor({ value = '', onChange, label = 'Contenu'
 
         restoreSelection();
         if (linkText) {
-            const html = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-yolk-500 underline font-medium">${linkText}</a>`;
+            const html = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-yolk-500 dark:text-yolk-400 underline font-medium">${linkText}</a>`;
             insertRawHtml(html);
         } else {
             execCommand('createLink', url);
@@ -510,7 +510,7 @@ export default function RichTextEditor({ value = '', onChange, label = 'Contenu'
                     onMouseUp={saveSelection}
                     onClick={saveSelection}
                     onFocus={saveSelection}
-                    className="min-h-[250px] max-h-[500px] overflow-y-auto p-4 text-sm text-gray-900 dark:text-sand-100 outline-none prose dark:prose-invert max-w-none"
+                    className="min-h-[250px] max-h-[500px] overflow-y-auto p-4 text-sm text-gray-900 dark:text-sand-100 outline-none max-w-none *:text-gray-900 dark:*:text-sand-100 [&_a]:text-yolk-500 dark:[&_a]:text-yolk-400"
                 />
             </div>
 

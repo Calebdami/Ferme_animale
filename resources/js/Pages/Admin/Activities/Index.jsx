@@ -306,18 +306,22 @@ export default function Index({ activities }) {
                                 </p>
                             </div>
                         </div>
-                        <div className="flex gap-3 shrink-0">
+                        <div className="flex gap-2 shrink-0">
                             <button
                                 onClick={() => edit(a)}
-                                className={`text-sm font-medium hover:underline ${editingId === a.id ? 'text-yolk-600' : 'text-yolk-500'}`}
+                                className={`inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white transition hover:border-yolk-300 hover:bg-yolk-50 dark:border-soil-700 dark:bg-soil-800 dark:hover:bg-soil-700 ${editingId === a.id ? 'text-yolk-600 dark:text-yolk-400' : 'text-yolk-500'}`}
+                                aria-label={`Modifier ${a.title}`}
+                                title={editingId === a.id ? 'En cours…' : 'Modifier'}
                             >
-                                {editingId === a.id ? '✏️ En cours…' : 'Modifier'}
+                                <Icon name="pencil" className="h-4 w-4" />
                             </button>
                             <button
                                 onClick={() => setDeletingItem(a)}
-                                className="text-sm font-medium text-clay-500 hover:underline"
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 bg-white text-clay-500 transition hover:border-clay-300 hover:bg-clay-50 dark:border-soil-700 dark:bg-soil-800 dark:text-clay-400 dark:hover:bg-soil-700"
+                                aria-label={`Supprimer ${a.title}`}
+                                title="Supprimer"
                             >
-                                Supprimer
+                                <Icon name="trash" className="h-4 w-4" />
                             </button>
                         </div>
                     </div>

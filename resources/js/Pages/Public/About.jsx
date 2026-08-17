@@ -36,7 +36,7 @@ export default function About({ page, settings, team }) {
 
                 {page?.content && (
                     <div
-                        className="mt-10 max-w-3xl text-gray-600 dark:text-sand-300 prose dark:prose-invert"
+                        className="prose-content mt-10 max-w-3xl text-gray-600 dark:text-sand-300 prose dark:prose-invert"
                         dangerouslySetInnerHTML={{ __html: page.content }}
                     />
                 )}

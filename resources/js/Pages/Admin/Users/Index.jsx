@@ -143,9 +143,11 @@ export default function Index({ users }) {
                                             </button>
                                             <button
                                                 onClick={() => setDeletingUser(u)}
-                                                className="text-xs font-medium text-clay-500 hover:underline"
+                                                className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-clay-500 transition hover:border-clay-300 hover:bg-clay-50 dark:border-soil-700 dark:bg-soil-800 dark:text-clay-400 dark:hover:bg-soil-700"
+                                                aria-label={`Supprimer ${u.name}`}
+                                                title="Supprimer"
                                             >
-                                                Supprimer
+                                                <Icon name="trash" className="h-4 w-4" />
                                             </button>
                                         </div>
                                     )}
