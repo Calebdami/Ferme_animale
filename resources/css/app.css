@@ -41,9 +41,11 @@
 
     /* Styles pour le contenu éditable en mode sombre */
     .dark [contenteditable] {
-        @apply text-sand-100 bg-soil-900;
+        color: rgb(245 239 230) !important;
+        background-color: rgb(20 18 16) !important;
     }
 
+    .dark [contenteditable] *,
     .dark [contenteditable] p,
     .dark [contenteditable] h1,
     .dark [contenteditable] h2,
@@ -52,17 +54,22 @@
     .dark [contenteditable] h5,
     .dark [contenteditable] h6,
     .dark [contenteditable] li,
-    .dark [contenteditable] blockquote {
-        @apply text-sand-100;
+    .dark [contenteditable] blockquote,
+    .dark [contenteditable] strong,
+    .dark [contenteditable] b,
+    .dark [contenteditable] em,
+    .dark [contenteditable] i,
+    .dark [contenteditable] span {
+        color: rgb(245 239 230) !important;
     }
 
     .dark [contenteditable] a {
-        @apply text-yolk-400;
+        color: #fbbf24 !important;
     }
 
     .dark [contenteditable] img,
     .dark [contenteditable] video {
-        @apply max-w-full;
+        max-width: 100%;
     }
 
     /* Styles pour le rendu du contenu HTML en mode sombre - surpasser les styles prose */
