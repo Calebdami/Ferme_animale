@@ -1,6 +1,7 @@
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import AdminLayout from '@/Layouts/AdminLayout';
+import Icon from '@/Components/Icon';
 import { Button, Error, Label, TextInput, Toggle } from '@/Components/Form/Field';
 import ConfirmModal from '@/Components/ConfirmModal';
 
