@@ -275,9 +275,9 @@ export default function RichTextEditor({ value = '', onChange, label = 'Contenu'
         }`;
 
     return (
-        <div className="space-y-1.5">
+        <div className="space-y-1.5 rich-text-editor-shell">
             {label && (
-                <label className="block text-sm font-medium text-gray-700 dark:text-sand-300">
+                <label className="rich-text-editor-label block text-sm font-medium text-gray-700 dark:text-sand-300">
                     {label}
                 </label>
             )}
@@ -305,7 +305,7 @@ export default function RichTextEditor({ value = '', onChange, label = 'Contenu'
                 )}
 
                 {/* Toolbar avec détection d'états actifs et preventDefault sur mousedown */}
-                <div className="flex flex-wrap items-center gap-1 border-b border-gray-200 dark:border-soil-800 bg-gray-50 dark:bg-soil-800/60 p-2 select-none">
+                <div className="rich-text-editor-toolbar flex flex-wrap items-center gap-1 border-b border-gray-200 dark:border-soil-800 bg-gray-50 dark:bg-soil-800/60 p-2 select-none">
                     <button
                         type="button"
                         onMouseDown={(e) => e.preventDefault()}

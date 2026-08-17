@@ -72,6 +72,21 @@
         max-width: 100%;
     }
 
+    .dark .rich-text-editor-label {
+        color: rgb(245 239 230) !important;
+    }
+
+    .dark .rich-text-editor-toolbar,
+    .dark .rich-text-editor-toolbar button,
+    .dark .rich-text-editor-toolbar span,
+    .dark .rich-text-editor-toolbar div {
+        color: rgb(245 239 230) !important;
+    }
+
+    .dark .rich-text-editor-toolbar button {
+        border-color: rgba(245, 239, 230, 0.16);
+    }
+
     /* Styles pour le rendu du contenu HTML en mode sombre - surpasser les styles prose */
     .dark .prose-content {
         color: rgb(217, 211, 201) !important;
