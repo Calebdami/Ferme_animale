@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Partage Certifié — prototype de démonstration</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E🔐%3C/text%3E%3C/svg%3E">
+    <style>
+        :root {
+            --bg: #f4f6f2;
+            --card: #fff;
+            --ink: #12241a;
+            --mut: #58675e;
+            --line: #d9e1da;
+            --pri: #0f4d2e;
+            --priT: #fff;
+            --acc: #e8b100;
+            --ok: #0f7a42;
+            --bad: #b3261e;
+            --wn: #8a5d00;
+            color-scheme: light;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0d1511;
+                --card: #15211a;
+                --ink: #e6eee8;
+                --mut: #9bafa2;
+                --line: #26382d;
+                --pri: #4fbf85;
+                --priT: #062012;
+                --acc: #f0c53a;
+                --ok: #5fd596;
+                --bad: #ff8a80;
+                --wn: #f0c53a;
+                color-scheme: dark
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #0d1511;
+            --card: #15211a;
+            --ink: #e6eee8;
+            --mut: #9bafa2;
+            --line: #26382d;
+            --pri: #4fbf85;
+            --priT: #062012;
+            --acc: #f0c53a;
+            --ok: #5fd596;
+            --bad: #ff8a80;
+            --wn: #f0c53a;
+            color-scheme: dark
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 16px/1.55 "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif
+        }
+
+        .w {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 18px 16px 48px
+        }
+
+        h1 {
+            font: 700 1.5rem/1.2 "Fraunces", Georgia, serif;
+            margin: 0 0 4px
+        }
+
+        h2 {
+            font: 700 1.25rem/1.3 "Fraunces", Georgia, serif;
+            margin: 18px 0 4px
+        }
+
+        h3 {
+            margin: 22px 0 8px;
+            font-size: 1.05rem
+        }
+
+        .mut {
+            color: var(--mut)
+        }
+
+        p {
+            margin: 6px 0
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+            border-left: 6px solid var(--acc);
+            padding-left: 12px
+        }
+
+        .note {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin: 12px 0;
+            font-size: .9rem;
+            color: var(--mut)
+        }
+
+        nav {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            margin: 14px 0;
+            border-bottom: 2px solid var(--line)
+        }
+
+        nav button {
+            border: 0;
+            background: none;
+            color: var(--mut);
+            padding: 10px 14px;
+            font: inherit;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px
+        }
+
+        nav button.on {
+            color: var(--pri);
+            border-color: var(--pri)
+        }
+
+        section {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 6px 18px 20px
+        }
+
+        .g {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 12px;
+            margin: 12px 0
+        }
+
+        label {
+            display: block;
+            font-size: .88rem;
+            font-weight: 600
+        }
+
+        input,
+        select {
+            display: block;
+            width: 100%;
+            margin-top: 4px;
+            padding: 9px 10px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: var(--bg);
+            color: var(--ink);
+            font: inherit
+        }
+
+        fieldset {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            margin: 10px 0;
+            padding: 8px 12px
+        }
+
+        .ck {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            font-weight: 400;
+            margin: 4px 0
+        }
+
+        .ck input {
+            width: auto;
+            margin: 0
+        }
+
+        button {
+            font: inherit;
+            cursor: pointer;
+            border: 1px solid var(--line);
+            background: var(--card);
+            color: var(--ink);
+            border-radius: 6px;
+            padding: 8px 14px
+        }
+
+        button.pri {
+            background: var(--pri);
+            color: var(--priT);
+            border-color: var(--pri);
+            font-weight: 600
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 3px solid var(--acc);
+            outline-offset: 1px
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin: 10px 0
+        }
+
+        .card.pick {
+            cursor: pointer
+        }
+
+        .card.pick:hover,
+        .card.sel {
+            border-color: var(--pri)
+        }
+
+        .chip {
+            display: inline-block;
+            font-size: .78rem;
+            padding: 1px 9px;
+            border-radius: 99px;
+            border: 1px solid var(--line);
+            color: var(--mut)
+        }
+
+        .chip.ok {
+            color: var(--ok);
+            border-color: var(--ok)
+        }
+
+        .chip.bad {
+            color: var(--bad);
+            border-color: var(--bad)
+        }
+
+        .chip.wn {
+            color: var(--wn);
+            border-color: var(--wn)
+        }
+
+        .msg {
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid;
+            margin: 12px 0
+        }
+
+        .msg.ok {
+            color: var(--ok)
+        }
+
+        .msg.bad {
+            color: var(--bad)
+        }
+
+        ul.l {
+            padding-left: 18px;
+            margin: 8px 0
+        }
+
+        ul.l li {
+            margin: 3px 0
+        }
+
+        .paper {
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            color: #111;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 12px 0;
+            user-select: none;
+            -webkit-user-select: none
+        }
+
+        .paper h3 {
+            margin-top: 0;
+            font-family: Georgia, serif
+        }
+
+        .wm {
+            position: absolute;
+            inset: -60%;
+            transform: rotate(-24deg);
+            font-size: 13px;
+            line-height: 2.6;
+            color: #0f4d2e;
+            opacity: .14;
+            pointer-events: none;
+            word-break: break-word
+        }
+
+        .paper>*:not(.wm) {
+            position: relative
+        }
+
+        .ev {
+            font-size: .84rem;
+            color: var(--mut);
+            margin: 2px 0 0
+        }
+
+        @media print {
+            body {
+                display: none
+            }
+        }
+
+        @media (prefers-reduced-motion:no-preference) {
+            .msg {
+                animation: f .25s
+            }
+
+            @keyframes f {
+                from {
+                    opacity: 0
+                }
+
+                to {
+                    opacity: 1
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="w">
+        <div class="top">
+            <div>
+                <h1>Partage Certifié</h1>
+                <p class="mut">Un registre d’organismes vérifiés sur l’ANIP pour ne plus fournir deux fois les mêmes
+                    pièces.</p>
+            </div><button data-a="reset">Réinitialiser</button>
+        </div>
+        <p class="note">Prototype de démonstration : toutes les données sont fictives et la simulation tourne dans ton
+            navigateur, sans connexion à l’ANIP. Parcours : l’organisme se déclare, l’ANIP valide, le citoyen partage,
+            l’organisme ouvre en lecture seule.</p>
+        <div id="app"></div>
+    </div>
+    <script>
+        const $ = s => document.querySelector(s), v = id => ($("#" + id) || {}).value || "", h = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+        const today = () => new Date().toISOString().slice(0, 10), plus = d => new Date(Date.now() + d * 864e5).toISOString().slice(0, 10), now = () => new Date().toLocaleString("fr-FR");
+        const AL = "ABCDEFGHJKMNPQRSTUVWXYZ23456789", rnd = n => Array.from({ length: n }, () => AL[Math.floor(Math.random() * AL.length)]).join("");
+        const FREE = /@(gmail|yahoo|hotmail|outlook)\./i;
+        const DOCS = ["Acte de naissance", "Certificat de nationalité", "Certificat d’identification personnelle", "Casier judiciaire (extension)"];
+        let S;
+        function init() {
+            S = {
+                tab: 0, n: 2, sel: null, ro: 1, view: null, unl: false, msg: null, q: "", chk: false, sid: 1, codes: ["PC-4K7M-21"], shares: [],
+                orgs: [{ id: 1, nom: "Centre de recrutement Atlas (démo)", type: "Recrutement ponctuel", rccm: "RB/COT/00 B 0000", npi: "0000000000", fin: plus(40), mail: "recrutement@atlas-demo.bj", docs: [DOCS[0], DOCS[1], DOCS[3]], st: "validé", code: "PC-4K7M-21", dep: today() }]
+            }
+        }
+        function gen() { let c; do { c = "PC-" + rnd(4) + "-" + (10 + Math.floor(Math.random() * 90)) } while (S.codes.includes(c)); S.codes.push(c); return c }
+        const E = s => { S.msg = ["bad", s]; R() }, O = s => { S.msg = ["ok", s]; R() };
+        const p3 = d => { const x = new Date(d); x.setDate(x.getDate() + 3); return x.toISOString().slice(0, 10) };
+        const org = i => S.orgs.find(o => o.id == i), shr = i => S.shares.find(s => s.id == i);
+        function R() {
+            const T = ["1 · L’organisme se déclare", "2 · L’ANIP valide", "3 · Le citoyen partage", "4 · L’organisme reçoit"];
+            $("#app").innerHTML = `<nav>${T.map((t, i) => `<button class="${S.tab == i ? "on" : ""}" data-a="tab" data-i="${i}">${t}</button>`).join("")}</nav>${S.msg ? `<p class="msg ${S.msg[0]}" role="status">${h(S.msg[1])}</p>` : ""}<section>${[P0, P1, P2, P3][S.tab]()}</section>`
+        }
+        const chip = o => `<span class="chip ${o.st == "validé" ? "ok" : o.st == "refusé" ? "bad" : "wn"}">${o.st}</span>`;
+        function P0() {
+            return `<h2>L’organisme se déclare sur l’ANIP</h2><p class="mut">Une entreprise, une administration ou un centre de recrutement demande à recevoir des pièces, pour une durée limitée ou définitive.</p>
+<div class="g"><label>Nom légal<input id="n" value="Groupe Akpé Logistique SARL (démo)"></label>
+<label>Type d’organisme<select id="t"><option>Entreprise<option>Administration<option>Recrutement ponctuel</select></label>
+<label>RCCM / IFU<input id="r" value="RB/COT/00 B 1234"></label>
+<label>Représentant légal (NPI, 10 chiffres)<input id="p" value="0000000001" inputmode="numeric"></label>
+<label>Fin de la collecte (vide = définitif)<input id="f" type="date"></label>
+<label>E-mail de réception<input id="m" value="rh@akpe-logistique.bj"></label></div>
+<fieldset><legend>Pièces demandées</legend>${DOCS.map((d, i) => `<label class="ck"><input type="checkbox" class="dk" value="${i}" ${i < 2 ? "checked" : ""}>${h(d)}</label>`).join("")}</fieldset>
+<button class="pri" data-a="decl">Déposer la déclaration</button>
+<p class="mut">Teste une adresse en @gmail.com avec le type « Entreprise » : le canal sera refusé.</p>
+${S.orgs.filter(o => o.id > 1).map(o => `<div class="card"><b>${h(o.nom)}</b> ${chip(o)}<br><span class="mut">${h(o.type)} · ${h(o.mail)}</span></div>`).join("")}`
+        }
+        function P1() {
+            const q = S.orgs.filter(o => o.st == "en attente"); return `<h2>L’ANIP vérifie et valide</h2><p class="mut">Vérification par niveaux, décision sous 3 jours maximum. Chaque organisme validé reçoit un code de collecte unique, jamais réattribué, même après expiration.</p>
+${q.length ? q.map(o => `<div class="card"><b>${h(o.nom)}</b> <span class="chip">${h(o.type)}</span><ul class="l"><li>✓ Représentant légal identifié par son NPI (${h(o.npi)})</li><li>✓ RCCM / IFU vérifié, étape simulée : ${h(o.rccm)}</li><li>${o.free ? "⚠ Adresse gratuite acceptée uniquement pour un recrutement ponctuel : contrôle renforcé" : "✓ Canal professionnel confirmé par code"}</li><li>Déposé le ${o.dep}, décision attendue avant le ${p3(o.dep)}</li></ul><button class="pri" data-a="val" data-i="${o.id}">Valider</button> <button data-a="ref" data-i="${o.id}">Refuser</button></div>`).join("") : `<p class="mut">Aucune déclaration en attente. Dépose-en une à l’étape 1.</p>`}
+<h3>Registre des organismes validés</h3>${S.orgs.filter(o => o.st == "validé").map(o => `<div class="card"><b>${h(o.nom)}</b> <span class="chip ok">✓ Vérifié</span><br><span class="mut">Code de collecte <b>${o.code}</b> · ${h(o.type)} · ${o.fin ? "jusqu’au " + o.fin : "définitif"}</span></div>`).join("")}`
+        }
+        const LST = () => { const q = S.q.toLowerCase(), L = S.orgs.filter(o => o.st == "validé" && (!q || (o.nom + o.code).toLowerCase().includes(q))); return L.length ? L.map(o => `<div class="card pick ${S.sel == o.id ? "sel" : ""}" data-a="sel" data-i="${o.id}"><b>${h(o.nom)}</b> <span class="chip ok">✓ Vérifié</span><br><span class="mut">${h(o.rccm)} · code ${o.code} · ${o.fin ? "jusqu’au " + o.fin : "définitif"}</span></div>`).join("") : `<p class="mut">Aucun organisme vérifié ne correspond.</p>` };
+        function P2() {
+            const o = org(S.sel); return `<h2>Le citoyen partage ses pièces</h2><p class="mut">Koffi A. (NPI fictif) cherche un organisme vérifié ou saisit son code de collecte, vu sur l’offre ou l’affiche.</p>
+<label>Rechercher un organisme<input id="q" placeholder="Nom ou code, par exemple PC-4K7M-21" value="${h(S.q)}"></label><div id="lst">${LST()}</div>
+${o ? `<h3>Partager avec ${h(o.nom)}</h3><div class="g"><label>Nom<input id="sn" value="ADJOVI"></label><label>Prénoms<input id="sp" value="Koffi Marc"></label><label>Référence du dossier<input id="sr" value="Candidature RH-2026-0142"></label><label>Finalité du partage<input id="sf" value="Recrutement : dossier de candidature"></label><label>Durée d’accès<select id="sd"><option value="7">7 jours<option value="30">30 jours</select></label></div>
+<fieldset><legend>Pièces à transmettre</legend>${o.docs.map(d => `<label class="ck"><input type="checkbox" class="sk" value="${h(d)}" checked>${h(d)}</label>`).join("")}</fieldset>
+<label class="ck"><input type="checkbox" id="sc" checked>Protéger par un code d’ouverture (obligatoire pour les pièces sensibles)</label>
+<p><button class="pri" data-a="share">Consentir et partager</button></p>`: ""}
+<h3>Mon journal de partages</h3>${S.shares.length ? S.shares.map(s => `<div class="card"><b>${h(org(s.org).nom)}</b> <span class="chip ${s.st == "actif" ? "ok" : "bad"}">${s.st}</span><br><span class="mut">${s.docs.map(h).join(", ")} · accès jusqu’au ${s.exp}</span>${s.prot ? `<p class="ev">Code d’ouverture à remettre à l’organisme : <b>${s.pin}</b></p>` : ""}${s.ev.map(e => `<p class="ev">${e[0]} : ${h(e[1])}</p>`).join("")}${s.st == "actif" ? `<p><button data-a="rev" data-i="${s.id}">Révoquer l’accès</button></p>` : ""}</div>`).join("") : `<p class="mut">Aucun partage pour l’instant.</p>`}`
+        }
+        function qr(id) {
+            let x = id * 9301 + 49297, c = ""; const f = (i, j) => { for (const [r, k] of [[0, 0], [0, 14], [14, 0]]) { const a = i - r, b = j - k; if (a >= 0 && a < 7 && b >= 0 && b < 7) return a % 6 == 0 || b % 6 == 0 || (a > 1 && a < 5 && b > 1 && b < 5) ? 1 : 0 } return null };
+            for (let i = 0; i < 21; i++)for (let j = 0; j < 21; j++) { x = (x * 9301 + 49297) % 233280; const t = f(i, j); if (t === 1 || (t === null && x / 233280 > .5)) c += `<rect x="${j}" y="${i}" width="1" height="1"/>` }
+            return `<svg viewBox="0 0 21 21" width="96" height="96" fill="#111" role="img" aria-label="QR de vérification, illustratif">${c}</svg>`
+        }
+        function P3() {
+            const ok = S.orgs.filter(o => o.st == "validé"), o = org(S.ro) || ok[0], L = S.shares.filter(s => s.org == o.id), s = shr(S.view);
+            return `<h2>L’organisme reçoit et ouvre en lecture seule</h2><p class="mut">Pas d’interface à développer : l’organisme reçoit une notification qui identifie le dossier, puis ouvre une copie signée par l’ANIP.</p>
+<label>Je suis<select id="ro">${ok.map(x => `<option value="${x.id}" ${x.id == o.id ? "selected" : ""}>${h(x.nom)}</option>`).join("")}</select></label>
+${L.length ? L.map(x => `<div class="card"><b>Nouveau dossier : ${h(x.nom)} ${h(x.pre)}</b> <span class="chip ${x.st == "actif" ? "ok" : "bad"}">${x.st}</span><br><span class="mut">${h(x.ref)} · ${x.docs.length} pièce(s) · reçu le ${x.ev[0][0]}${x.prot ? " · code d’ouverture requis" : ""}</span><p><button class="pri" data-a="open" data-i="${x.id}">Ouvrir</button></p></div>`).join("") : `<p class="mut">Aucun dossier reçu. Fais un partage à l’étape 3.</p>`}
+${s && s.org == o.id ? (s.prot && !S.unl ? `<div class="card"><b>Pièces protégées</b><label>Code d’ouverture remis par le citoyen<input id="pin" inputmode="numeric" maxlength="6"></label><p><button class="pri" data-a="pin">Déverrouiller</button> <button data-a="close">Fermer</button></p></div>` : `<div class="paper" oncontextmenu="return false"><div class="wm">${Array(70).fill(h(o.nom) + " · " + today() + " · " + h(s.fin)).join("   ")}</div><h3>République du Bénin · Copie de partage ANIP</h3><p><b>${h(s.nom)} ${h(s.pre)}</b> · Réf. ${h(s.ref)}</p><p>Pièces : ${s.docs.map(h).join(", ")}</p><p>Destinataire : ${h(o.nom)}<br>Motif : ${h(s.fin)}<br>Valable jusqu’au ${s.exp}</p>${qr(s.id)}<p style="font-size:.8rem;color:#444">Lecture seule, téléchargement désactivé. QR illustratif.</p></div>
+<button data-a="chk">Vérifier l’authenticité</button> <button data-a="close">Fermer</button>
+${S.chk ? `<p class="msg ok">✓ Signature ANIP valide. Document destiné à ${h(o.nom)}, émis pour « ${h(s.fin)} », valable jusqu’au ${s.exp}.</p>` : ""}`) : ""}`
+        }
+        const A = {
+            tab: i => { S.tab = i; R() }, reset: () => { init(); R() },
+            decl: () => {
+                const m = v("m"), t = v("t"), n = v("n"), d = [...document.querySelectorAll(".dk:checked")].map(e => DOCS[e.value]);
+                if (!n || !v("r")) return E("Renseigne le nom légal et le RCCM / IFU."); if (!/^\d{10}$/.test(v("p"))) return E("Le NPI du représentant légal doit comporter 10 chiffres.");
+                if (!/^\S+@\S+\.\S+$/.test(m)) return E("Saisis une adresse e-mail valide."); if (!d.length) return E("Choisis au moins une pièce demandée.");
+                const fr = FREE.test(m); if (fr && t != "Recrutement ponctuel") return E("Canal refusé : une adresse e-mail gratuite n’est pas acceptée pour un organisme permanent. Utilise une adresse professionnelle.");
+                S.orgs.push({ id: S.n++, nom: n, type: t, rccm: v("r"), npi: v("p"), fin: v("f"), mail: m, docs: d, st: "en attente", dep: today(), free: fr }); O("Déclaration reçue. Elle attend la décision de l’ANIP (3 jours maximum).")
+            },
+            val: i => { const o = org(i); o.st = "validé"; o.code = gen(); O(o.nom + " est validé. Code de collecte unique : " + o.code) },
+            ref: i => { org(i).st = "refusé"; E("Déclaration refusée.") },
+            sel: i => { S.sel = i; R() },
+            share: () => {
+                const o = org(S.sel), d = [...document.querySelectorAll(".sk:checked")].map(e => e.value); if (!d.length) return E("Choisis au moins une pièce à partager."); if (!v("sf")) return E("Précise la finalité du partage.");
+                const prot = $("#sc").checked || d.some(x => x == DOCS[3]), pin = prot ? String(100000 + Math.floor(Math.random() * 900000)) : "";
+                S.shares.push({ id: S.sid++, org: o.id, docs: d, nom: v("sn"), pre: v("sp"), ref: v("sr"), fin: v("sf"), exp: plus(+v("sd")), prot, pin, st: "actif", att: 0, ev: [[now(), "Partagé avec " + o.nom + (prot ? " (code d’ouverture requis)" : "")]] });
+                O(prot ? "Partage envoyé. Code d’ouverture : " + pin + ". Remets-le à l’organisme par un autre canal que le lien." : "Partage envoyé.")
+            },
+            rev: i => { const s = shr(i); s.st = "révoqué"; s.ev.push([now(), "Accès révoqué par le citoyen"]); O("Accès révoqué : l’organisme ne peut plus ouvrir ce dossier.") },
+            open: i => { const s = shr(i); if (s.st != "actif") return E("Accès " + s.st + " : ce dossier ne peut plus être ouvert."); S.view = i; S.unl = !s.prot; S.chk = false; if (!s.prot) s.ev.push([now(), "Ouvert par " + org(s.org).nom]); R() },
+            pin: () => { const s = shr(S.view); if (v("pin").replace(/\D/g, "") == s.pin) { S.unl = true; s.att = 0; s.ev.push([now(), "Ouvert par " + org(s.org).nom + " avec le code"]); R() } else { s.att++; s.ev.push([now(), "Code erroné (" + s.att + "/3)"]); if (s.att >= 3) { s.st = "bloqué"; S.view = null; return E("Trois essais erronés : accès bloqué, le citoyen est notifié.") } E("Code incorrect. Essai " + s.att + " sur 3.") } },
+            chk: () => { const s = shr(S.view); S.chk = true; s.ev.push([now(), "Authenticité vérifiée par " + org(s.org).nom]); R() },
+            close: () => { S.view = null; R() }
+        };
+        document.addEventListener("click", e => { const b = e.target.closest("[data-a]"); if (!b) return; S.msg = null; const f = A[b.dataset.a]; f && f(+b.dataset.i) });
+        document.addEventListener("input", e => { if (e.target.id == "q") { S.q = e.target.value; $("#lst").innerHTML = LST() } });
+        document.addEventListener("change", e => { if (e.target.id == "ro") { S.ro = +e.target.value; S.view = null; R() } });
+        init(); R();
+    </script>
+</body>
+
+</html>
